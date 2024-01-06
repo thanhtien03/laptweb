@@ -1,0 +1,1 @@
+cac tinh nang bao mat CSRF
