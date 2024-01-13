@@ -1,0 +1,92 @@
+body{
+    background-image: url(flower.jpg);
+    background-repeat: no-repeat;
+    }
+    #wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    }
+    caption{
+        border: 2px solid  rgb(145, 73, 124);
+        border-bottom: none;
+        padding-top: 20px;
+        font-weight: bold;
+        font-size: 20px;
+        padding-bottom: none;
+        background-color: rgb(255, 255, 255);
+    }
+    table{
+        border: 2px solid  rgb(169, 36, 131);
+        padding: 40px 40px;
+        border-top: none;
+        font-size: 20px;
+        background-color: rgb(255, 255, 255);
+    }
+    .cot1{
+        border: 2px solid black;
+        padding: 10px 80px 10px 80px;
+        display: flex;
+        justify-content: center;
+        margin-top: 30px;
+    }
+    .cot2{
+        border: 2px solid black;
+        padding: 10px 80px 10px 80px;
+        display: flex;
+        justify-content: center;
+        margin-top: 30px;
+    }
+    #input{
+        display:flex;
+        align-items: center;
+        text-align: center;
+        font-size: px;
+    }
+    #input td{
+        padding-left: 100px;
+    }   
+    #dangnhap{
+        list-style: none;
+        display: flex;
+        padding: 10px;
+        border: none;
+        border-radius: 10px;
+        background-color: rgb(59, 26, 244);
+        color: white;
+    }
+    #qmk{
+        border: none;
+        color: blue;
+        background-color: white;
+        padding-right: 30px;
+    }
+    .input2{
+        float: right;
+        margin-right: 30px;
+    } 
+    #Nhaplai_1{
+        font-size: 20px;
+        padding: 5px 10px;
+        margin: 0px 10px;
+        color: black;
+        background-color: rgb(249, 249, 249);
+    }
+    .input1{
+        display: flex;
+        padding-bottom: 20px;
+
+    }
+    .input1 td{
+        padding-right: 30px;
+        margin: auto;
+    }
+    .input_hoten{
+        width: 280px;
+        height: 20px;
+        font-size: 10px;
+    }
+    i{
+        padding: 5px;
+    }

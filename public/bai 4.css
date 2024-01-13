@@ -1,0 +1,75 @@
+body{
+    background-image: url(flower.jpg);
+    background-repeat: no-repeat;
+    }
+    #wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    }
+    caption{
+        margin-bottom: 20px;
+    }
+    form{
+        display: flex;
+        justify-content: center;
+        align-items: center;    
+    }
+    .cot1{
+        border: 2px solid black;
+        padding: 10px 80px 10px 80px;
+        display: flex;
+        justify-content: center;
+        margin-top: 30px;
+        margin-bottom: 50px;
+    }
+    .cot1 #home{
+        border: none;
+    }
+    .cot2 #home{
+        border: none;
+    }
+    .cot2{
+        margin-bottom: 50px;
+        border: 2px solid black;
+        padding: 10px 80px 10px 80px;
+        display: flex;
+        justify-content: center;
+        margin-top: 30px;
+    }
+    #hangdau{
+        border: 1px solid black;
+    }
+    table{
+        border: 1px solid black;
+    }
+    #hangdau{
+        border: 2px solid black;
+    }
+    .hang1, td{
+        border-left: 2px solid black;
+        border-collapse: collapse;
+        border-right: 2px solid black;
+        padding: 10px;
+    }
+    .page {
+        display: flex;
+        justify-content: center;
+       margin-top: 50px;
+       padding: 5px;
+    }
+    .page td{
+        border: 1px solid whitesmoke;
+        border-collapse: collapse;
+    }
+    #abc{list-style: none;display: flex; border-radius: 3px;background-color: white;}
+    #abc{padding-top: 10px;
+        padding-bottom: 10px;
+        color: aqua;; font-size:15px ;display: flex;
+        justify-content: center;
+        align-items: center;
+        border: none;
+     }
+    #abc:hover{border-radius: 3px;
+    color:rgb(17, 7, 190);}
