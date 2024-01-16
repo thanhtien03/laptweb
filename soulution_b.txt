@@ -1,0 +1,47 @@
+1. Liệt kê các hóa đơn của khách hàng, thông tin hiển thị gồm: mã user, tên user, mã hóa đơn 
+SELECT U.user_id AS "Mã User", U.user_name AS "Tên User", O.order_id AS "Mã Hóa Đơn" FROM users U JOIN orders O ON U.user_id = O.user_id;
+2. Liệt kê số lượng các hóa đơn của khách hàng: mã user, tên user, số đơn hàng
+SELECT U.user_id AS "Mã User", U.user_name AS "Tên User", COUNT(O.order_id) AS "Số Đơn Hàng" FROM users U LEFT JOIN orders O ON U.user_id = O.user_id GROUP BY U.user_id, U.user_name;
+3. Liệt kê thông tin hóa đơn: mã đơn hàng, số sản phẩm
+SELECT O.order_id AS "Mã Đơn Hàng", COUNT(OD.product_id) AS "Số Sản Phẩm" FROM orders O LEFT JOIN order_details OD ON O.order_id = OD.order_id GROUP BY O.order_id;
+4. Liệt kê thông tin mua hàng của người dùng: mã user, tên user, mã đơn hàng, tênsảnphẩm. Lưu ý: gôm nhóm theo đơn hàng, tránh hiển thị xen kẻ các đơn hàngvới nhau
+SELECT U.user_id AS "Mã User", U.user_name AS "Tên User", O.order_id AS "Mã Đơn Hàng", P.product_name AS "Tên Sản Phẩm" 
+FROM users U JOIN orders O ON U.user_id = O.user_id JOIN order_details OD ON 
+O.order_id = OD.order_id JOIN products P ON OD.product_id = P.product_id ORDER BY O.order_id;
+5. Liệt kê 7 người dùng có số lượng đơn hàng nhiều nhất, thông tin hiển thị gồm: mãuser, tên user, số lượng đơn hàng
+SELECT U.user_id AS "Mã User", U.user_name AS "Tên User", COUNT(O.order_id) AS "Số Lượng Đơn Hàng" 
+FROM users U LEFT JOIN orders O 
+ON U.user_id = O.user_id GROUP BY U.user_id, U.user_name ORDER BY COUNT(O.order_id) DESC
+6. Liệt kê 7 người dùng mua sản phẩm có tên: Samsung hoặc Apple trongtênsảnphẩm, thông tin hiển thị gồm: mã user, tên user, mã đơn hàng, tên sản phẩm
+SELECT U.user_id AS "Mã User", U.user_name AS "Tên User", O.order_id AS "Mã Đơn Hàng", P.product_name 
+AS "Tên Sản Phẩm" 
+FROM users U JOIN orders O ON U.user_id = O.user_id JOIN order_details OD ON O.order_id = OD.order_id 
+													JOIN products P ON OD.product_id = P.product_id 
+WHERE P.product_name LIKE '%Samsung%' OR P.product_name LIKE '%Apple%' LIMIT 7;
+7. Liệt kê danh sách mua hàng của user bao gồm giá tiền của mỗi đơn hàng, thôngtinhiển thị gồm: mã user, tên user, mã đơn hàng, tổng tiền
+SELECT U.user_id AS "Mã User", U.user_name AS "Tên User", O.order_id AS "Mã Đơn Hàng", SUM(P.product_price) AS "Tổng Tiền" 
+FROM users U JOIN orders O ON U.user_id = O.user_id JOIN order_details OD ON O.order_id = OD.order_id 
+													JOIN products P ON OD.product_id = P.product_id 
+GROUP BY U.user_id, U.user_name, O.order_id;
+8.
+WITH UserOrderSummary AS ( SELECT U.user_id AS "Mã User", U.user_name AS "Tên User", O.order_id AS "Mã Đơn Hàng", SUM(P.product_price) 
+AS "Tổng Tiền", ROW_NUMBER() OVER (PARTITION BY U.user_id ORDER BY SUM(P.product_price) DESC) 
+AS RowNum FROM users U JOIN orders O ON U.user_id = O.user_id 
+JOIN order_details OD ON O.order_id = OD.order_id 
+JOIN products P ON OD.product_id = P.product_id GROUP BY U.user_id, U.user_name, O.order_id ) 
+SELECT "Mã User", "Tên User", "Mã Đơn Hàng", "Tổng Tiền" FROM UserOrderSummary WHERE RowNum = 1;
+9.
+WITH UserOrderSummary AS ( SELECT U.user_id AS "Mã User", U.user_name AS "Tên User", O.order_id AS "Mã Đơn Hàng", SUM(P.product_price) AS "Tổng Tiền", COUNT(DISTINCT OD.product_id) AS "Số Sản Phẩm", ROW_NUMBER() OVER (PARTITION BY U.user_id ORDER BY SUM(P.product_price) ASC) AS RowNum FROM users U 
+JOIN orders O ON U.user_id = O.user_id JOIN order_details OD ON O.order_id = OD.order_id 
+JOIN products P ON OD.product_id = P.product_id GROUP BY U.user_id, U.user_name, O.order_id ) SELECT "Mã User", "Tên User", "Mã Đơn Hàng", "Tổng Tiền", "Số Sản Phẩm" 
+FROM UserOrderSummary WHERE RowNum = 1;
+10.
+WITH UserOrderSummary AS ( SELECT U.user_id AS "Mã User", U.user_name AS "Tên User", O.order_id 
+AS "Mã Đơn Hàng", SUM(P.product_price) AS "Tổng Tiền", 
+					COUNT(DISTINCT OD.product_id) AS "Số Sản Phẩm", 
+					ROW_NUMBER() OVER (PARTITION BY U.user_id ORDER BY COUNT(DISTINCT OD.product_id) DESC) AS RowNum 
+FROM users U JOIN orders O ON U.user_id = O.user_id JOIN order_details OD ON O.order_id = OD.order_id 
+			 JOIN products P ON OD.product_id = P.product_id 
+			 GROUP BY U.user_id, U.user_name, O.order_id ) 
+SELECT "Mã User", "Tên User", "Mã Đơn Hàng", "Tổng Tiền", "Số Sản Phẩm" 
+FROM UserOrderSummary WHERE RowNum = 1;
